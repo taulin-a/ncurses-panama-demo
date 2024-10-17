@@ -1,6 +1,7 @@
-package org.taulin.engine;
+package org.taulin.engine.objects.impl;
 
 import org.taulin.bindings.ncurses.NCurses;
+import org.taulin.engine.objects.Drawable;
 
 import java.lang.foreign.MemorySegment;
 import java.util.Objects;
@@ -23,10 +24,12 @@ public class Board implements Drawable {
         this.backgroundColor = backgroundColor;
     }
 
+    @Override
     public void draw() {
         initWindow();
         addBorder();
         setColors();
+        setKeypadSupport();
         refresh();
     }
 
@@ -43,6 +46,10 @@ public class Board implements Drawable {
     private void setColors() {
         NCurses.init_pair((short) 1, foregroundColor, backgroundColor);
         NCurses.wbkgdset(windowRef, NCurses.COLOR_PAIR(1));
+    }
+
+    private void setKeypadSupport() {
+        NCurses.keypad(windowRef, true);
     }
 
     @Override
@@ -67,5 +74,13 @@ public class Board implements Drawable {
         if (Objects.isNull(windowRef)) return null;
 
         return MemorySegment.ofAddress(windowRef.address());
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }
