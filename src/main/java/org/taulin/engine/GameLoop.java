@@ -26,9 +26,9 @@ public class GameLoop {
     public void run() {
         initWindow();
 
-        board.draw();
-
         while (!gameOver) {
+            board.clear();
+            board.draw();
             spaceShip.draw();
             spaceShip.processInput();
             board.refresh();

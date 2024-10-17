@@ -49,16 +49,6 @@ public class SpaceShip implements Drawable, Movable, Controllable {
     }
 
     @Override
-    public void refresh() {
-        // DO NOTHING
-    }
-
-    @Override
-    public void close() throws Exception {
-        // DO NOTHING
-    }
-
-    @Override
     public boolean canMoveUp() {
         return pieces.stream()
                 .allMatch(Glyph::canMoveUp);

@@ -1,7 +1,5 @@
 package org.taulin.engine.objects;
 
-public interface Drawable extends AutoCloseable {
+public interface Drawable {
     void draw();
-
-    void refresh();
 }

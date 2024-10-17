@@ -23,16 +23,6 @@ public class Glyph implements Drawable, Movable {
     }
 
     @Override
-    public void refresh() {
-        // DO NOTHING
-    }
-
-    @Override
-    public void close() throws Exception {
-        // DO NOTHING
-    }
-
-    @Override
     public boolean canMoveUp() {
         return y > 1;
     }

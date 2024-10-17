@@ -52,7 +52,6 @@ public class Board implements Drawable {
         NCurses.keypad(windowRef, true);
     }
 
-    @Override
     public void refresh() {
         if (Objects.isNull(windowRef)) {
             throw new IllegalStateException("Board must first be drawn to be refreshed");
@@ -61,13 +60,11 @@ public class Board implements Drawable {
         NCurses.wrefresh(windowRef);
     }
 
-    @Override
-    public void close() throws Exception {
-        if (Objects.isNull(windowRef)) {
-            throw new IllegalStateException("Board wasn't initialized");
-        }
+    public void clear() {
+        if (Objects.isNull(windowRef)) return;
 
         NCurses.wclear(windowRef);
+        windowRef = null;
     }
 
     public MemorySegment getWindowRef() {
