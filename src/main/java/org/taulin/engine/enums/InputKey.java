@@ -8,7 +8,8 @@ public enum InputKey {
     KEY_UP(NCurses.KEY_UP()),
     KEY_DOWN(NCurses.KEY_DOWN()),
     KEY_LEFT(NCurses.KEY_LEFT()),
-    KEY_RIGHT(NCurses.KEY_RIGHT());
+    KEY_RIGHT(NCurses.KEY_RIGHT()),
+    SPACE_BAR(' ');
 
     private final int keyCode;
 

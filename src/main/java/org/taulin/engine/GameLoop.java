@@ -4,7 +4,7 @@ import org.taulin.bindings.ncurses.NCurses;
 import org.taulin.engine.objects.impl.Board;
 import org.taulin.engine.objects.impl.SpaceShip;
 
-public class GameLoop {
+public class GameLoop implements AutoCloseable {
     private static final int BOARD_DIMENSION = 20;
     private static final int BOARD_ROWS = BOARD_DIMENSION;
     private static final int BOARD_COLUMNS = (int) (BOARD_DIMENSION * 2.5);
@@ -34,7 +34,7 @@ public class GameLoop {
             board.refresh();
         }
 
-        NCurses.endwin();
+        closeWindow();
     }
 
     private static void initWindow() {
@@ -49,5 +49,10 @@ public class GameLoop {
     private static void closeWindow() {
         // Close ncurses
         NCurses.endwin();
+    }
+
+    @Override
+    public void close() throws Exception {
+        // TODO: Implement logic for closing resources
     }
 }
