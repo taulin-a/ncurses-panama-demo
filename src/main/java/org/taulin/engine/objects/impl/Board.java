@@ -1,6 +1,7 @@
-package org.taulin.engine;
+package org.taulin.engine.objects.impl;
 
 import org.taulin.bindings.ncurses.NCurses;
+import org.taulin.engine.objects.Drawable;
 
 import java.lang.foreign.MemorySegment;
 import java.util.Objects;
@@ -23,10 +24,12 @@ public class Board implements Drawable {
         this.backgroundColor = backgroundColor;
     }
 
+    @Override
     public void draw() {
         initWindow();
         addBorder();
         setColors();
+        setKeypadSupport();
         refresh();
     }
 
@@ -45,7 +48,10 @@ public class Board implements Drawable {
         NCurses.wbkgdset(windowRef, NCurses.COLOR_PAIR(1));
     }
 
-    @Override
+    private void setKeypadSupport() {
+        NCurses.keypad(windowRef, true);
+    }
+
     public void refresh() {
         if (Objects.isNull(windowRef)) {
             throw new IllegalStateException("Board must first be drawn to be refreshed");
@@ -54,18 +60,24 @@ public class Board implements Drawable {
         NCurses.wrefresh(windowRef);
     }
 
-    @Override
-    public void close() throws Exception {
-        if (Objects.isNull(windowRef)) {
-            throw new IllegalStateException("Board wasn't initialized");
-        }
+    public void clear() {
+        if (Objects.isNull(windowRef)) return;
 
         NCurses.wclear(windowRef);
+        windowRef = null;
     }
 
     public MemorySegment getWindowRef() {
         if (Objects.isNull(windowRef)) return null;
 
         return MemorySegment.ofAddress(windowRef.address());
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }
