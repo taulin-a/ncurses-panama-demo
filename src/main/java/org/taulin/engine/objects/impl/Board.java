@@ -1,5 +1,6 @@
 package org.taulin.engine.objects.impl;
 
+import lombok.Getter;
 import org.taulin.bindings.ncurses.NCurses;
 import org.taulin.engine.objects.Drawable;
 
@@ -7,7 +8,9 @@ import java.lang.foreign.MemorySegment;
 import java.util.Objects;
 
 public class Board implements Drawable {
+    @Getter
     private final int height;
+    @Getter
     private final int width;
     private final int beginY;
     private final int beginX;
@@ -71,13 +74,5 @@ public class Board implements Drawable {
         if (Objects.isNull(windowRef)) return null;
 
         return MemorySegment.ofAddress(windowRef.address());
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
     }
 }
