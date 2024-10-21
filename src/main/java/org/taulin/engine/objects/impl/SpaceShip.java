@@ -14,24 +14,22 @@ public class SpaceShip implements Drawable, Movable, Controllable {
 
     private final Board board;
     private final List<Glyph> pieces;
+    private final ProjectilePool projectilePool;
 
     public SpaceShip(Board board) {
         this.board = board;
-
-        pieces = initPieces(board);
-    }
-
-    private static List<Glyph> initPieces(Board board) {
-        Glyph frontPiece = new Glyph(board, board.getHeight() - 3, 2, PIECES_CHAR);
-        Glyph leftPiece = new Glyph(board, board.getHeight() - 2, 1, PIECES_CHAR);
-        Glyph rightPiece = new Glyph(board, board.getHeight() - 2, 3, PIECES_CHAR);
-
-        return List.of(frontPiece, leftPiece, rightPiece);
+        pieces = List.of(
+                new Glyph(board, board.getHeight() - 3, 2, PIECES_CHAR),
+                new Glyph(board, board.getHeight() - 2, 1, PIECES_CHAR),
+                new Glyph(board, board.getHeight() - 2, 3, PIECES_CHAR)
+        );
+        projectilePool = new ProjectilePool(board);
     }
 
     @Override
     public void draw() {
         pieces.forEach(Glyph::draw);
+        projectilePool.draw();
     }
 
     @Override
@@ -45,6 +43,7 @@ public class SpaceShip implements Drawable, Movable, Controllable {
             case KEY_DOWN -> down();
             case KEY_LEFT -> left();
             case KEY_RIGHT -> right();
+            case SPACE_BAR -> shoot();
         }
     }
 
@@ -98,5 +97,15 @@ public class SpaceShip implements Drawable, Movable, Controllable {
         if (!canMoveRight()) return;
 
         pieces.forEach(Glyph::right);
+    }
+
+    private void shoot() {
+        if (!canShoot()) return;
+
+        projectilePool.shoot(pieces.getFirst().getY() - 1, pieces.getFirst().getX());
+    }
+
+    private boolean canShoot() {
+        return pieces.getFirst().getY() > 0;
     }
 }

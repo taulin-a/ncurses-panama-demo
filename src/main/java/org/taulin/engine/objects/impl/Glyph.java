@@ -1,12 +1,15 @@
 package org.taulin.engine.objects.impl;
 
+import lombok.Getter;
 import org.taulin.bindings.ncurses.NCurses;
 import org.taulin.engine.objects.Drawable;
 import org.taulin.engine.objects.Movable;
 
 public class Glyph implements Drawable, Movable {
     private final Board board;
+    @Getter
     private int y;
+    @Getter
     private int x;
     private final char charToDraw;
 
